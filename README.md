@@ -287,15 +287,8 @@ networks:
 ## Exemples d'Utilisation
 
 ### Créer un utilisateur
-```
-curl -X POST http://localhost:9999/user-service/users -H "Content-Type: application/json" -d '{"name":"Alice","email":"alice@example.com"}'
-```
+<img width="1911" height="324" alt="image" src="https://github.com/user-attachments/assets/d3f14a37-6f9f-4acc-b729-fd42fd05d150" />
 
-**Screenshot** :
-```
-HTTP/1.1 201 Created
-Location: http://localhost:9999/user-service/users/1
-```
 
 ### Créer un livre
 ```
