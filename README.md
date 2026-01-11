@@ -1,36 +1,49 @@
 # Microservices Application - Bibliothèque
 
+## Table des Matières
+- [Description](#description)
+- [Architecture](#architecture)
+- [Prérequis](#prérequis)
+- [Installation et Lancement](#installation-et-lancement)
+- [Configuration Docker Compose](#configuration-docker-compose)
+- [Services et Routes](#services-et-routes)
+- [Exemples d'Utilisation](#exemples-dutilisation)
+- [Technologies Utilisées](#technologies-utilisées)
+- [Dépannage](#dépannage)
+- [Auteur](#Auteur)
+- [Licence](#licence)
+
 ## Description
 Cette application est une architecture de microservices pour un système de bibliothèque utilisant Spring Boot, Eureka pour la découverte de services, Spring Cloud Gateway pour le routage, Kafka pour la communication asynchrone, et MySQL pour les bases de données.
 
 ## Architecture
 ```
-                    GESTION D’EMPRUNTS
-
-                         Client
-                           |
-                     Gateway Service
-                           |
-                       Eureka Server
-                           |
-           -----------------------------------------
-           |                 |                     |
-      User Service       Book Service        Emprunt Service
-           |                 |                     |
-         MySQL              MySQL                MySQL
-        db_user            db_book           db_emprunter
-
-
-                     Kafka (Communication Asynchrone)
-
-                 Emprunt Service
-                       |
-                       v
-             Topic : emprunt-created
-                       |
-                       v
-              Notification Service
-                 (log / console)
+                                      GESTION D’EMPRUNTS
+                  
+                                           Client
+                                             |
+                                       Gateway Service
+                                             |
+                                         Eureka Server
+                                             |
+                             -----------------------------------------
+                             |                 |                     |
+                        User Service       Book Service        Emprunt Service
+                             |                 |                     |
+                           MySQL              MySQL                MySQL
+                          db_user            db_book           db_emprunter
+                  
+                  
+                                       Kafka (Communication Asynchrone)
+                  
+                                   Emprunt Service
+                                         |
+                                         v
+                               Topic : emprunt-created
+                                         |
+                                         v
+                                Notification Service
+                                   (log / console)
 ```
 
 - **Eureka Server** : Service de découverte (port 8761)
@@ -295,25 +308,16 @@ networks:
 
 
 ### Créer un emprunt
-```
-curl -X POST http://localhost:9999/emprunt-service/emprunts -H "Content-Type: application/json" -d '{"userId":1,"bookId":1}'
-```
+<img width="1792" height="65" alt="image" src="https://github.com/user-attachments/assets/f34892df-4b0f-4ee6-82b9-4f23d587a494" />
 
-**Screenshot** :
-```
-HTTP/1.1 201 Created
-Location: http://localhost:9999/emprunt-service/emprunts/1
-```
 
 ### Vérifier les notifications
 ```
 docker-compose logs notification-service
 ```
 
-**Screenshot** :
-```
-notification-service | Notification reçue: Emprunt créé pour userId=1, bookId=1
-```
+<img width="1671" height="837" alt="image" src="https://github.com/user-attachments/assets/d3300b60-78fd-49a0-b76c-13cf06ae1fa9" />
+
 
 ### Lister les utilisateurs
 <img width="1915" height="943" alt="image" src="https://github.com/user-attachments/assets/2d79deb6-8a4a-47b3-95d4-3e54601cac89" />
@@ -324,26 +328,7 @@ notification-service | Notification reçue: Emprunt créé pour userId=1, bookId
 
 
 ### Lister les emprunts
-```
-curl http://localhost:9999/emprunt-service/emprunts
-```
-
-**Screenshot** :
-```
-{
-  "_embedded": {
-    "emprunts": [
-      {
-        "userId": 1,
-        "bookId": 1,
-        "_links": {...}
-      }
-    ]
-  },
-  "_links": {...},
-  "page": {...}
-}
-```
+<img width="1899" height="106" alt="image" src="https://github.com/user-attachments/assets/d3f4f962-eaf0-4d8b-aa9c-0c0f8fccfb5c" />
 
 ### Eureka Dashboard
 <img width="1902" height="969" alt="image" src="https://github.com/user-attachments/assets/9b1bb220-5184-415f-b1f5-609750bcc8cc" />
@@ -364,7 +349,7 @@ curl http://localhost:9999/emprunt-service/emprunts
 - Pour rebuild un service : `docker-compose build <service-name>`
 - Ports utilisés : 8761 (Eureka), 9999 (Gateway), 8081-8086 (Services)
 
-## Contributeurs
+## Auteur
 - Yassine Darif | Mastre M2SI-INSEA
 
 ## Licence
