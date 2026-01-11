@@ -291,15 +291,8 @@ networks:
 
 
 ### Créer un livre
-```
-curl -X POST http://localhost:9999/book-service/books -H "Content-Type: application/json" -d '{"titre":"Spring Boot Guide"}'
-```
+<img width="1887" height="302" alt="image" src="https://github.com/user-attachments/assets/405c1f5b-4b7b-4243-a273-d7fb4962d3c4" />
 
-**Screenshot** :
-```
-HTTP/1.1 201 Created
-Location: http://localhost:9999/book-service/books/1
-```
 
 ### Créer un emprunt
 ```
@@ -323,47 +316,12 @@ notification-service | Notification reçue: Emprunt créé pour userId=1, bookId
 ```
 
 ### Lister les utilisateurs
-```
-curl http://localhost:9999/user-service/users
-```
+<img width="1915" height="943" alt="image" src="https://github.com/user-attachments/assets/2d79deb6-8a4a-47b3-95d4-3e54601cac89" />
 
-**Screenshot** :
-```
-{
-  "_embedded": {
-    "users": [
-      {
-        "name": "Alice",
-        "email": "alice@example.com",
-        "_links": {...}
-      }
-    ]
-  },
-  "_links": {...},
-  "page": {...}
-}
-```
 
 ### Lister les livres
-```
-curl http://localhost:9999/book-service/books
-```
+<img width="1917" height="931" alt="image" src="https://github.com/user-attachments/assets/38eea5d4-59ba-4c08-9ff7-a0552e1c0761" />
 
-**Screenshot** :
-```
-{
-  "_embedded": {
-    "books": [
-      {
-        "titre": "Spring Boot Guide",
-        "_links": {...}
-      }
-    ]
-  },
-  "_links": {...},
-  "page": {...}
-}
-```
 
 ### Lister les emprunts
 ```
@@ -388,15 +346,8 @@ curl http://localhost:9999/emprunt-service/emprunts
 ```
 
 ### Eureka Dashboard
-```
-Eureka Dashboard
-- Instances currently registered with Eureka
-- USER-SERVICE: UP
-- BOOK-SERVICE: UP
-- EMPRUNT-SERVICE: UP
-- GATEWAY-SERVICE: UP
-- NOTIFICATION-SERVICE: UP
-```
+<img width="1902" height="969" alt="image" src="https://github.com/user-attachments/assets/9b1bb220-5184-415f-b1f5-609750bcc8cc" />
+
 
 ## Technologies Utilisées
 - Spring Boot 3.2.7
