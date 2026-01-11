@@ -1,14 +1,17 @@
 package com.org.emprunt.service;
 
 import com.org.emprunt.DTO.EmpruntDetailsDTO;
+import com.org.emprunt.DTO.EmpruntEvent;
 import com.org.emprunt.entities.Emprunter;
 import com.org.emprunt.feign.BookClient;
 import com.org.emprunt.feign.UserClient;
 import com.org.emprunt.repositories.EmpruntRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,11 +20,13 @@ public class EmpruntService {
     private final EmpruntRepository repo;
     private final UserClient userClient;
     private final BookClient bookClient;
+    private final KafkaTemplate<String, EmpruntEvent> kafkaTemplate;
 
-    public EmpruntService(EmpruntRepository repo, UserClient userClient, BookClient bookClient) {
+    public EmpruntService(EmpruntRepository repo, UserClient userClient, BookClient bookClient, KafkaTemplate<String, EmpruntEvent> kafkaTemplate) {
         this.repo = repo;
         this.userClient = userClient;
         this.bookClient = bookClient;
+        this.kafkaTemplate = kafkaTemplate;
     }
 
     public Emprunter createEmprunt(Long userId, Long bookId) {
@@ -37,7 +42,13 @@ public class EmpruntService {
         b.setUserId(userId);
         b.setBookId(bookId);
 
-        return repo.save(b);
+        Emprunter savedEmprunt = repo.save(b);
+
+        // 4. Produire message Kafka
+        EmpruntEvent event = new EmpruntEvent(savedEmprunt.getId(), userId, bookId, "EMPRUNT_CREATED", LocalDateTime.now());
+        kafkaTemplate.send("emprunt-created", event);
+
+        return savedEmprunt;
     }
 
     public List<EmpruntDetailsDTO> getAllEmprunts() {

@@ -26,12 +26,17 @@ public class Book {
     }
     private String titre;
     
-    public void setTitre(String name) {
-        this.titre = name;
+    public void setTitre(String titre) {
+        this.titre = titre;
     }
     public String getTitre() {
         return titre;
     }
     
+    public Book() {}
+    
+    public Book(String titre) {
+        this.titre = titre;
+    }
     
 }
